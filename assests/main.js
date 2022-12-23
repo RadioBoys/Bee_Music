@@ -1,4 +1,5 @@
 const playBtn = document.querySelector('.play-inner');
+const volumeBtn = document.querySelector('.volume-inner')
 const nextBtn = document.querySelector('.play-forward');
 const prevBtn = document.querySelector('.play-backward');
 const song = document.getElementById('song');
@@ -59,6 +60,17 @@ const musics =[
         active:false,
 
     },
+    {
+        id: 5,
+        number: '06',
+        file: 'ttbdty.mp3',
+        title: 'Trên tình bạn dưới tình yêu',
+        artist: 'Min',
+        time: '3:19',
+        active:false,
+
+    },
+    
 ];
 
 //set mặc định bài 1 phát đầu
@@ -114,6 +126,54 @@ function playPause() {
         isPlaying = true;
     }
 }
+
+//==============================================
+//                  Tắt âm lượng bài hát
+//==============================================
+let isMuted = true;
+volumeBtn.addEventListener('click', function(){
+    if (isMuted) {
+        volumeBtn.innerHTML = `<i class="fas fa-volume-mute"></i>`;
+        song.muted = true;
+        isMuted = false;
+    } else{
+        volumeBtn.innerHTML = `<i class="fas fa-volume-down"></i>`;
+        song.muted = false;
+        isMuted = true;
+    }
+
+});
+
+//==============================================
+//                  VOLUME JS
+//==============================================
+function changeVolume(amount){
+    song.volume=amount;
+
+    if(amount === '0'){
+        volumeBtn.innerHTML = `<i class="fas fa-volume-mute"></i>`;
+    } else{
+        volumeBtn.innerHTML = `<i class="fas fa-volume-down"></i>`;
+    }
+}
+
+//==============================================
+//                  HOTKEY
+//==============================================
+document.addEventListener('keydown', function(event){
+    if(event.key===" "){ //space key;
+      if(isPlaying){
+        playBtn.innerHTML = '<i class="fas fa-pause-circle pause-icon main-icon main-icon--big"></i>';
+        song.play();
+        isPlaying = false;
+      } else{
+        playBtn.innerHTML = `<i class="fas fa-play-circle play-icon main-icon main-icon--big"></i>`;
+        song.pause();
+        isPlaying = true;
+      }
+    }
+})
+
 //==============================================
 //                  Phát lại bài hát
 //==============================================
